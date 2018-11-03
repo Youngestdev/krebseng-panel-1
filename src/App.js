@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import NavBar from './components/NavBar';
 import Welcome from './components/Welcome';
+import withSplashScreen from './components/withSplashScreen';
 
 class App extends Component {
   render() {
@@ -15,4 +16,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withSplashScreen(App);

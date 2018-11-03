@@ -1,4 +1,20 @@
-import React from 'react';
+import React, {Fragment} from 'react';
+import auth0Client from '../Auth';
+
+function VisitorsView() {
+  return (
+    <Fragment>
+      <p>Para continuar, faça login.</p>
+      <button onClick={auth0Client.signIn} className="btn btn-primary">Login</button>
+    </Fragment>
+  );
+}
+
+function AuthenticatedUsersView() {
+  return (
+    <div>Para continuar, utilize o menu na barra de navegação (topo).</div>
+  )
+}
 
 function Welcome() {
   return (
@@ -7,8 +23,8 @@ function Welcome() {
         <div className="card">
           <div className="card-body text-center">
             <p>Bem-vindo ao painel de controle Krebs Engenharia.</p>
-            <p>Para continuar, faça login.</p>
-            <button className="btn btn-primary">Login</button>
+            { auth0Client.isAuthenticated() && AuthenticatedUsersView() }
+            { !auth0Client.isAuthenticated() && VisitorsView() }
           </div>
         </div>
       </div>
