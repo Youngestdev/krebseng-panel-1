@@ -3,9 +3,9 @@ import auth0 from 'auth0-js';
 class Auth {
   constructor() {
     this.auth0 = new auth0.WebAuth({
-      domain: 'krebseng.auth0.com',
-      audience: 'https://www.krebseng.com.br',
-      clientID: 'pcjhQ2kzJzT5PwxbjIbe4GmgGSKxUjOG',
+      domain: 'budul.auth0.com',
+      // audience: 'https://www.krebseng.com.br',
+      clientID: 'H5WocKc729qvrAw8L3nKSUN7srQQdIxq',
       redirectUri: 'http://localhost:3000',
       responseType: 'token id_token',
       scope: 'openid profile'
@@ -76,7 +76,7 @@ class Auth {
     // clear id token, profile, and expiration
     this.auth0.logout({
       returnTo: 'http://localhost:3000',
-      clientID: 'pcjhQ2kzJzT5PwxbjIbe4GmgGSKxUjOG',
+      clientID: 'H5WocKc729qvrAw8L3nKSUN7srQQdIxq',
     });
   }
 }

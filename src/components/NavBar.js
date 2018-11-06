@@ -8,7 +8,7 @@ function NavBarProfile() {
         <div className="nav-link">{auth0Client.getProfile().name}</div>
       </li>
       <li className="nav-item">
-        <a onClick={auth0Client.signOut} className="nav-link">Sair</a>
+        <button onClick={auth0Client.signOut} className="nav-link">Sair</button>
       </li>
     </ul>
   );

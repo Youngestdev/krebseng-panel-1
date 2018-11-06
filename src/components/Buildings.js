@@ -1,5 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import firebaseClient from '../services/firebase';
+import { PushSpinner } from 'react-spinners-kit';
 
 function BuildingRecord(building) {
   return (
@@ -10,7 +11,7 @@ function BuildingRecord(building) {
         <button className="btn btn-primary">Editar</button>
       </td>
     </tr>
-  )
+  );
 }
 
 class Buildings extends Component {
@@ -19,45 +20,53 @@ class Buildings extends Component {
 
     this.state = {
       buildings: [],
-      loading: true,
-    }
+      loading: true
+    };
   }
 
   componentDidMount() {
-    firebaseClient.setBuildingsListener((querySnapshot) => {
+    firebaseClient.setBuildingsListener(querySnapshot => {
       const buildings = [];
-      querySnapshot.forEach((doc) => {
+      querySnapshot.forEach(doc => {
         console.log(doc);
         buildings.push(doc.data());
       });
       this.setState({
         buildings,
-        loading: false,
+        loading: false
       });
     });
   }
 
   render() {
-    const {loading, buildings} = this.state;
+    const { loading, buildings } = this.state;
     return (
       <div className="row">
         <div className="col-12">
           <table className="table">
             <thead>
-            <tr className="table-primary">
-              <th>Nome</th>
-              <th>Endereço</th>
-              <th></th>
-            </tr>
+              <tr className="table-primary">
+                <th>Nome</th>
+                <th>Endereço</th>
+                <th />
+              </tr>
             </thead>
             <tbody>
-            { loading && <tr><td colSpan={3} className="text-center">Loading</td></tr> }
-            { !loading && buildings.map((building) => (BuildingRecord(building))) }
+                <tr>
+                  <td colSpan={3} className="center">
+                  <PushSpinner
+                      size={30}
+                      color="#686769"
+                      loading={loading}
+                    />
+                  </td>
+                </tr>
+              {!loading && buildings.map(building => BuildingRecord(building))}
             </tbody>
           </table>
         </div>
       </div>
-    )
+    );
   }
 }
 

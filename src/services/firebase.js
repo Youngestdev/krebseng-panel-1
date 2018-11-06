@@ -5,9 +5,9 @@ import 'firebase/firestore';
 class Firebase {
   constructor() {
     firebase.initializeApp({
-      apiKey: 'AIzaSyBdq2Eq1RhOXLjKVFDBCjhZoY7oV83mAJI',
-      authDomain: 'krebs-engenharia.firebaseapp.com',
-      projectId: 'krebs-engenharia',
+      apiKey: 'AIzaSyCxvYa9MHi8E5OkmfN2JR2G4rp4jSWhofM',
+      authDomain: 'react-auth0-2b280.firebaseapp.com',
+      projectId: 'react-auth0-2b280',
     });
 
     // initialize Firestore through Firebase

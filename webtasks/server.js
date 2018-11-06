@@ -5,6 +5,8 @@ const jwks = require('jwks-rsa');
 const firebaseAdmin = require('firebase-admin');
 const path = require('path');
 
+require('dotenv').config();
+
 const app = express();
 app.use(cors());
 app.use('/', express.static(path.join(__dirname, 'public')));
@@ -14,23 +16,20 @@ const jwtCheck = jwt({
     cache: true,
     rateLimit: true,
     jwksRequestsPerMinute: 5,
-    jwksUri: `https://krebseng.auth0.com/.well-known/jwks.json`
+    jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
   }),
-  audience: 'https://www.krebseng.com.br',
-  issuer: `https://krebseng.auth0.com/`,
+  audience: process.env.AUTH0_API_AUDIENCE,
+  issuer: `https://${process.env.AUTH0_DOMAIN}/`,
   algorithm: 'RS256'
+});
+const serviceAccount = require('./service');
+
+firebaseAdmin.initializeApp({
+  credential: firebaseAdmin.credential.cert(serviceAccount),
+  databaseURL: `https://${serviceAccount.project_id}.firebaseio.com`
 });
 
 app.get('/firebase', jwtCheck, async (req, res) => {
-  const serviceAccount = JSON.parse(
-    process.env.FIREBASE_ADMIN_TOKEN || req.webtaskContext.secrets.FIREBASE_ADMIN_TOKEN
-  );
-
-  firebaseAdmin.initializeApp({
-    credential: firebaseAdmin.credential.cert(serviceAccount),
-    databaseURL: `https://${serviceAccount.project_id}.firebaseio.com`
-  });
-
   const {sub: uid} = req.user;
 
   try {
@@ -44,4 +43,5 @@ app.get('/firebase', jwtCheck, async (req, res) => {
   }
 });
 
+// app.listen(3001, () => console.log('Server running on localhost:3001'));
 module.exports = app;

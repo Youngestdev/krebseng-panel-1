@@ -16,3 +16,7 @@ code {
 nav.navbar {
   margin-bottom: 40px;
 }
+
+.center {
+  align-content: center;
+}
